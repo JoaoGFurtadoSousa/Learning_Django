@@ -1,12 +1,10 @@
 from django.shortcuts import render
 # Create your views here.
-
+from core.settings import BASE_DIR, STATIC_ROOT, STATICFILES_DIRS
+import os
 
 def cadastro(request): 
-    pessoa = [{"nome": "John Snow",
-               "idade": 22},
-               {"nome": "Jofrey",
-               "idade": 18},
-               {"nome": "Jorah",
-               "idade": 55}]
+    print(os.path.join(BASE_DIR, 'templates'))
+    print(STATICFILES_DIRS)
+    pessoa = "Joao"
     return render(request, "cadastro\index.html", {"pessoas": pessoa}) 
