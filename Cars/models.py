@@ -8,3 +8,5 @@ class Cars(models.Model):
     preco = models.FloatField()
     marca = models.ForeignKey(Marca, on_delete= models.CASCADE)
     
+    def __str__(self):
+        return self.nome
