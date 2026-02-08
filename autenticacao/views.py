@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import HttpResponse
-import os
+import os, json
 
 def cadastro(request): 
     pessoa = "Joao"
@@ -19,7 +19,12 @@ def salvar_pessoa_no_banco(request):
         return render(request, 'login.html')
     return render(request, 'forms.html')
 
-def lista_todas_as_pessoas(request):
+def lista_todas_as_pessoas(request, pk: int):
+    if len(request.GET) != 0:
+        id_do_usuario = request.GET.get('id')
+        usuario = User.objects.get(id = id_do_usuario)[0]
+        return HttpResponse(json.dumps({'id': usuario.id,
+                                        'username':usuario.username})) 
     lista_de_pessoas = User.objects.all()
     return render(request, 'lista_de_pessoas.html', {'pessoas': lista_de_pessoas})
 
@@ -46,3 +51,8 @@ def login(request):
         print('Requisicao do GET')
         return render(request, 'login.html') 
 
+def buscar_usuario_unico(request, pk:int):
+    usuario = User.objects.filter(id = pk)[0]
+    return HttpResponse(json.dumps({'nome': usuario.username,
+                                    'email':usuario.email,
+                                    }))

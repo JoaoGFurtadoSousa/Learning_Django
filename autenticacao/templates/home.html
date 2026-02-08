@@ -7,5 +7,13 @@
 </head>
 <body>
     <h1>Bem vindo</h1>
+    {% block content %}
+    <form method="POST" action="{% url 'buscar_usuario_unico' %}">
+        {% csrf_token %}
+        <label for="nome_usuario">Nome do usuario desejado: </label>
+        <input id="nome_usuario" type="text" name="nome_usuario">
+        <button type="submit">Enviar</button>
+    </form>
+    {% endblock %}
 </body>
 </html>
